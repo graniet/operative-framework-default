@@ -1,4 +1,6 @@
-@debug off
+@verbose off
+@debug
+@history
 
 // Add a target & get id to object
 {1} = target add twitter graniet75
@@ -10,14 +12,13 @@ twitter_followers target {1}
 {2} = twitter_followers run
 
 // Foreach all result and add target to module
-
 ({2} => {F1}
 
 {3} = target add twitter {F1}
 
 sample_module target {3}
-@debug on
+@verbose on
 sample_module run
-@debug off
+@verbose off
 
 <=)
