@@ -1,13 +1,23 @@
-// Disallow event text
-session_stream set VERBOSE false
-session_stream run
+@debug off
+@history
 
-// Add target to session
-target add twitter graniet75
+// Add a target & get id to object
+{1} = target add twitter graniet75
 
-// Running API
-api run
+// Set target to module
+twitter_followers target {1}
 
-// Allow event text
-session_stream set VERBOSE true
-session_stream run
+// Execute module & get result to object
+{2} = twitter_followers run
+
+// Foreach all result and add target to module
+
+({2} => {F1}
+
+{3} = target add twitter {F1}
+directory_search target {3}
+directory_search run
+
+<= {F1})
+
+
