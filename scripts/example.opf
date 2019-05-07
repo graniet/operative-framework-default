@@ -1,5 +1,4 @@
 @debug off
-@history
 
 // Add a target & get id to object
 {1} = target add twitter graniet75
@@ -15,7 +14,10 @@ twitter_followers target {1}
 ({2} => {F1}
 
 {3} = target add twitter {F1}
-directory_search target {3}
-directory_search run
+
+sample_module target {3}
+@debug on
+sample_module run
+@debug off
 
 <=)
