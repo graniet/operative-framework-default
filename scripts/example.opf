@@ -18,6 +18,4 @@ twitter_followers target {1}
 directory_search target {3}
 directory_search run
 
-<= {F1})
-
-
+<=)
