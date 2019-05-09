@@ -1,24 +1,70 @@
+// Author: Tristan Granier
+// Getting IP address of website
+// Getting VHost
+// Getting header of each VHost
+// Getting meta tags
+// Getting possible exploit tools
+
+// Disallow console output
 @verbose off
+
+// Show debug information
 @debug
+
+// Show history of statement
 @history
 
-// Add a target & get id to object
-{1} = target add twitter graniet75
+// Add website target
+{1} = target add website example.com
 
-// Set target to module
-twitter_followers target {1}
+// configure module (get_ip_address)
+get_ip_address target {1}
 
-// Execute module & get result to object
-{2} = twitter_followers run
+// Execute module & store results
+{2} = get_ip_address run
 
-// Foreach all result and add target to module
-({2} => {F1}
+// Foreach results to F1
+foreach: {2} => {F1}
 
-{3} = target add twitter {F1}
+// Add target
+{3} = target add ip_address {F1}
 
-sample_module target {3}
+// Configure module (bing_vhost)
+bing_vhost target {3}
+
+// Execute module & store results
+{4} = bing_vhost run
+
+// End foreach
+:endforeach
+
+// Foreach all VHosts
+foreach: {4} => {F2}
+
+// Add vhost to URL TARGET
+{5} = target add url {F2}
+
+// Add vhost to WEBSITE TARGET
+{6} = target add website {F2}
+
+// Configure & execute module (header_retrieval)
+header_retrieval target {5}
+header_retrieval run
+
+// Configure & execute module (metatag_spider)
+metatag_spider target {5}
+metatag_spider run
+
+// Configure & execute module (tools_suggester)
+tools_suggester target {6}
+tools_suggester run
+
+// End foreach
+:endforeach
+
+
+// Show console output
 @verbose on
-sample_module run
-@verbose off
 
-<=)
+
+
